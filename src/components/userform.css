@@ -1,0 +1,33 @@
+.field{
+  position:relative;
+  height: 45px;
+  width: 100%;
+  display: flex;
+  background: rgba(255,255,255,0.94);
+  border-radius: 10px;
+}
+.cssinput{
+    height: 100%;
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #222;
+    font-size: 16px;
+    font-family: 'Poppins',sans-serif;
+  }
+  .space{
+    margin-top: 16px;
+  }
+
+  .pass{
+      text-align: left;
+      margin: 10px 0;
+  }
+  .pass label{
+    color:black;
+    font-size: 20px;
+    text-decoration: none;
+    font-family: 'Poppins',sans-serif;
+  }
+  
