@@ -73,3 +73,33 @@
   text-decoration: underline;
 }
 
+/* Increase font size and slow underline transition */
+.navbar-brand.nav-link {
+  font-size: 18px; /* You can adjust the font size as per your preference */
+  position: relative;
+  transition: all 0.3s ease; /* Slow down the underline transition */
+}
+
+/* Underline effect on hover */
+.navbar-brand.nav-link:after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 2px;
+  background-color: #007BFF; /* Underline color */
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%); /* Center the underline */
+  transition: all 0.3s ease;  /* Slow down the underline transition */
+}
+
+.navbar-brand.nav-link:hover:after {
+  width: 100%; /* Underline to full width on hover */
+}
+
+/* Light effect on text hover */
+.navbar-brand.nav-link:hover {
+  color: #007BFF; /* Text color on hover */
+  text-shadow: 0 0 10px rgb(171, 158, 245); /* Light shadow effect on text */
+}
