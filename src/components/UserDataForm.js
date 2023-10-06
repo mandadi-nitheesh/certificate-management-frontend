@@ -52,7 +52,7 @@ function UserDataForm({
       <div className="field space">
         <input
           type="text"
-          className="form-control"
+          className="cssinput"
           id="commonName"
           name="commonName"
           value={formData.commonName}
@@ -69,12 +69,13 @@ function UserDataForm({
       <div className="field space">
         <input
           type="text"
-          className="form-control"
+          className="cssinput"
           id="organization"
           name="organization"
           placeholder="Organization (O)"
           value={formData.organization}
           onChange={handleInputChange}
+          required
         />
       </div>
 
@@ -91,6 +92,7 @@ function UserDataForm({
           placeholder="Organizational Unit (OU)"
           value={formData.organizationalUnit}
           onChange={handleInputChange}
+          required
         />
       </div>
       <div className="pass">
@@ -140,6 +142,7 @@ function UserDataForm({
           name="locality"
           value={formData.locality}
           onChange={handleInputChange}
+          required
         />
       </div>
       <div className="pass">

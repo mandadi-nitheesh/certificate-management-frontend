@@ -6,6 +6,8 @@ import { store } from "../App";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import { getUser } from "../Utils/user";
+import Spinner from "./Spinner";
+
 const CertificateCreation = () => {
   const [jwtToken, SetjwtToken] = useContext(store);
   const navigation = useNavigate();
@@ -21,6 +23,8 @@ const CertificateCreation = () => {
     certificateType: "Signed",
   });
 
+  const [loading, Setloading] = useState(false);
+
   const [validationErrors, setValidationErrors] = useState({});
   const handleInputChange = (e) => {
     setFormData((previousState) => {
@@ -31,6 +35,7 @@ const CertificateCreation = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Validate form data before submission
+    Setloading(() => true);
     const errors = validateFormData(formData);
     if (Object.keys(errors).length === 0) {
       // No validation errors, proceed with submission
@@ -70,12 +75,6 @@ const CertificateCreation = () => {
       username: user,
     };
 
-    //console.log(userdata);
-    //const jsonData = JSON.stringify(userdata);
-    // Define the URL of your REST endpoint
-    //console.log("JSON data:", jsonData);
-    //console.log("apiurl:", apiUrl);
-
     const axiosConfig = {
       headers: {
         Authorization: `Bearer ${jwtToken}`,
@@ -88,6 +87,7 @@ const CertificateCreation = () => {
         if (response.status === 201) {
           // Request was successful, handle the response if needed
           alert("certificate is created...");
+          Setloading(() => false);
           handleReset();
           navigation({ pathname: "/" });
         }
@@ -101,6 +101,7 @@ const CertificateCreation = () => {
             error.response.data.detail === "token is malformed invalid token")
         ) {
           alert("please login..... to access the data..");
+          Setloading(() => false);
           navigation({ pathname: "/login" });
         }
       });
@@ -116,7 +117,7 @@ const CertificateCreation = () => {
       state: "",
       locality: "",
       emailAddress: "",
-      certificateType: "signed",
+      certificateType: "Signed",
     });
     setValidationErrors({});
   };
@@ -155,18 +156,21 @@ const CertificateCreation = () => {
   };
 
   return (
-    <div className="bg-img1">
-      <div className="content1">
-        <h2 className="header1">Certificate Creation</h2>
-        <UserDataForm
-          formData={formData}
-          validationErrors={validationErrors} // Pass validation errors to the form component
-          handleInputChange={handleInputChange}
-          handleSubmit={handleSubmit}
-          handleReset={handleReset}
-        />
+    <>
+      <div className="bg-img1">
+        <div className="content1">
+          <h2 className="header1">Certificate Creation</h2>
+          <UserDataForm
+            formData={formData}
+            validationErrors={validationErrors} // Pass validation errors to the form component
+            handleInputChange={handleInputChange}
+            handleSubmit={handleSubmit}
+            handleReset={handleReset}
+          />
+        </div>
       </div>
-    </div>
+      {loading === true ? <Spinner /> : null}
+    </>
   );
 };
 

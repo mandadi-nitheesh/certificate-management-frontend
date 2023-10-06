@@ -10,6 +10,7 @@ import { isTokenExists } from "./Utils/token";
 import DisplayCertificates from "./components/DisplayCertificates";
 import Renewal from "./components/Renewal";
 import { isRoleExists } from "./Utils/role";
+import Error404 from "./components/Error404";
 
 export const store = createContext();
 const App = () => {
@@ -39,6 +40,7 @@ const App = () => {
             element={<DisplayCertificates />}
           />
           <Route path="/Renewal/:id" element={<Renewal />} />
+          <Route path="*" element={<Error404 />} />
         </Routes>
       </store.Provider>
     </div>

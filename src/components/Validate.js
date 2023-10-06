@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { getJwtToken } from "../Utils/token";
 const Validate = ({ email, exitValidateModal, certificateData }) => {
-  const [option, Setoption] = useState("");
+  const [option, Setoption] = useState();
 
   const [display, Setdisplay] = useState(false);
   const [valid, Setvalid] = useState(false);

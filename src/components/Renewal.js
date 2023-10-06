@@ -178,6 +178,7 @@ const Renewal = () => {
                 name="organization"
                 value={data.organization}
                 onChange={handleInputChange}
+                required
               />
             </div>
             <div className="pass">
@@ -192,6 +193,7 @@ const Renewal = () => {
                 name="organizationalUnit"
                 value={data.organizationalUnit}
                 onChange={handleInputChange}
+                required
               />
             </div>
             <div className="pass">
@@ -239,6 +241,7 @@ const Renewal = () => {
                 name="locality"
                 value={data.locality}
                 onChange={handleInputChange}
+                required
               />
             </div>
 

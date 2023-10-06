@@ -15,6 +15,7 @@ const Navigation = () => {
     localStorage.removeItem("jwtToken");
     localStorage.removeItem("role");
     localStorage.removeItem("expiration");
+    localStorage.removeItem("user");
     const token = isTokenExists();
     const role = isRoleExists();
     Setrole(() => role);
@@ -37,7 +38,7 @@ const Navigation = () => {
           {role === "ROLE_USER" ? (
             <li class="nav-item navvv">
               <Link to={"/createCertificate"} class="navbar-brand nav-link">
-                CreateCertificate
+                Create Certificate
               </Link>
             </li>
           ) : null}

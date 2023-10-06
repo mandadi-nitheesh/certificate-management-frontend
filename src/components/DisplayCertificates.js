@@ -12,6 +12,7 @@ import Validate from "./Validate";
 import { getRole } from "../Utils/role";
 import Spinner from "./Spinner";
 import { getUser } from "../Utils/user";
+import Nocertificate from "./Nocertificate";
 //import ModalComponent from "./ModalComponent";
 
 const DisplayCertificates = () => {
@@ -46,7 +47,11 @@ const DisplayCertificates = () => {
     axios
       .get("http://localhost:8080/certificate/allCertificateData", axiosConfig)
       .then((response) => {
-        const filterData = response.data.filter((f) => f.username === user);
+        const role = getRole();
+        const filterData =
+          role === "ROLE_USER"
+            ? response.data.filter((f) => f.username === user)
+            : response.data;
         console.log(filterData);
         SetcertificateData(filterData);
         Setloading(() => false);
@@ -143,6 +148,7 @@ const DisplayCertificates = () => {
   // send email to ca
 
   const sendEmailHandler = (filename, email) => {
+    console.log(email);
     Setloading(() => true);
     const jwtToken = getJwtToken();
 
@@ -178,73 +184,83 @@ const DisplayCertificates = () => {
     });
   };
 
+  const verify =
+    certificateData.length === 0 && jwtToken !== null && jwtToken !== undefined;
+  console.log(verify);
+
+  console.log(jwtToken);
+
   return (
     <>
       <div className="row" style={{ marginTop: "10px", marginLeft: "20px" }}>
-        {certificateData.map((certificate) => {
-          return (
-            <div className="col-sm-3" key={certificate.fileId}>
-              <div
-                key={certificate.fileId}
-                className="card"
-                style={{ width: "18rem", marginTop: "20px" }}
-              >
-                <img
-                  src={certificateImg}
-                  className="card-img-top"
-                  alt="Card image cap"
-                />
-                <div className="card-body">
-                  <h5 className="card-title">{certificate.fileName}</h5>
-                  {role === "ROLE_USER" ? (
-                    <>
-                      <Button id={certificate.fileId}>Download</Button>
-                      <button
-                        className="btn btn-primary"
-                        style={{ marginLeft: "15px" }}
-                        onClick={() =>
-                          sendEmailHandler(
-                            certificate.fileName,
-                            certificate.email
-                          )
-                        }
-                      >
-                        Renew
-                      </button>
-                    </>
-                  ) : null}
-                  {role === "ROLE_CA" ? (
-                    <>
-                      <button type="button" style={{ marginLeft: "5px" }}>
-                        <Link
-                          to={`/renewal/${certificate.fileId}`}
-                          style={{ textDecoration: "none" }}
+        {verify === true ? (
+          <Nocertificate />
+        ) : (
+          certificateData.map((certificate) => {
+            return (
+              <div className="col-sm-3" key={certificate.fileId}>
+                <div
+                  key={certificate.fileId}
+                  className="card"
+                  style={{ width: "18rem", marginTop: "20px" }}
+                >
+                  <img
+                    src={certificateImg}
+                    className="card-img-top"
+                    alt="Card image cap"
+                  />
+                  <div className="card-body">
+                    <h5 className="card-title">{certificate.fileName}</h5>
+                    {role === "ROLE_USER" ? (
+                      <>
+                        <Button id={certificate.fileId}>Download</Button>
+                        <button
+                          className="btn btn-primary"
+                          style={{ marginLeft: "15px" }}
+                          onClick={() =>
+                            sendEmailHandler(
+                              certificate.fileName,
+                              certificate.email
+                            )
+                          }
                         >
-                          Renewal
-                        </Link>
-                      </button>
+                          Renew
+                        </button>
+                      </>
+                    ) : null}
+                    {role === "ROLE_CA" ? (
+                      <>
+                        <button type="button" style={{ marginLeft: "5px" }}>
+                          <Link
+                            to={`/renewal/${certificate.fileId}`}
+                            style={{ textDecoration: "none" }}
+                          >
+                            Renewal
+                          </Link>
+                        </button>
 
-                      <button
-                        type="button1"
-                        style={{ marginLeft: "25px" }}
-                        onClick={() => validateHandler(certificate.email)}
-                      >
-                        Validate
-                      </button>
-                    </>
-                  ) : null}
-                  <button
-                    onClick={() => clickHandler(certificate.fileId)}
-                    type="button2"
-                    style={{ margin: "10px" }}
-                  >
-                    View Certificate Details
-                  </button>
+                        <button
+                          type="button1"
+                          style={{ marginLeft: "25px" }}
+                          onClick={() => validateHandler(certificate.email)}
+                        >
+                          Validate
+                        </button>
+                      </>
+                    ) : null}
+                    <button
+                      onClick={() => clickHandler(certificate.fileId)}
+                      type="button2"
+                      style={{ margin: "10px" }}
+                    >
+                      View Certificate Details
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })
+        )}
       </div>
 
       {model === true ? (

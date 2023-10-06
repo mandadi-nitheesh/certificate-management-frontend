@@ -18,6 +18,7 @@ const Home = () => {
     console.log(jwtToken);
     console.log(getDuration());
 
+    // auto logout...
     if (!jwtToken) {
       return;
     }

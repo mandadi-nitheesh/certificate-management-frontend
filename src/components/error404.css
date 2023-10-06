@@ -1,0 +1,22 @@
+.cont {
+    margin: 50px auto;
+    max-width: 600px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+
+.h1404 {
+    font-size: 36px;
+}
+
+.p404 {
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+a {
+    text-decoration: none;
+    color: #007BFF;
+}
